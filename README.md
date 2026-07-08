@@ -1,3 +1,7 @@
+![DroneNAV](https://avatars.githubusercontent.com/u/287328252?s=400&u=42c97657ee8df9c220c0bf0d1cf7a0fe811c1fff&v=4)
+
+---
+
 # DroneNav Governance Platform
 
 The DroneNav Governance Platform provides the administrative, governance, and content management capabilities of the DroneNav ecosystem. Built on the Drupal Content Management System, it delivers a configurable, secure, and extensible environment for managing spatial governance data, survey workflows, user administration, and regulatory information while remaining independent of the operational flight services.
