@@ -1,0 +1,18 @@
+services:
+  home_page_for_roles.redirect_subscriber:
+    class: Drupal\home_page_for_roles\EventSubscriber\HomePageForRolesSubscriber
+    arguments: 
+      - '@current_user'
+      - '@config.factory'
+      - '@path.validator'
+      - '@path_alias.manager'
+    tags:
+      - { name: event_subscriber }
+  home_page_for_roles.settings_form:
+    class: Drupal\home_page_for_roles\Form\HomePageForRolesSettingsForm
+    arguments: 
+      - '@entity_type.manager'
+      - '@path.validator'
+      - '@path_alias.manager'
+    tags:
+      - { name: form }

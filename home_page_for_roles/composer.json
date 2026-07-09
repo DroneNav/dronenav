@@ -1,0 +1,16 @@
+{
+    "name": "drupal/set_home_page_by_role_vttw",
+    "type": "drupal-module",
+    "description": "Allows setting different homepages for different user roles",
+    "keywords": ["Drupal", "Homepage", "Roles"],
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/set_home_page_by_role_vttw",
+    "minimum-stability": "stable",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/set_home_page_by_role_vttw",
+        "source": "https://git.drupalcode.org/project/set_home_page_by_role_vttw"
+    },
+    "require": {
+        "drupal/core": "^11" 
+    }
+}

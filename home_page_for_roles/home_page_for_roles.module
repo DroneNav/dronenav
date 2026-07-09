@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ * Contains home_page_for_roles.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function home_page_for_roles_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.home_page_for_roles':
+      $output = '';
+      $output .= '<p>' . t('Configure different homepage redirections based on user roles.') . '</p>';
+      $output .= '<h3>' . t('Features') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Different homepages for anonymous users, authenticated users, and specific roles') . '</li>';
+      $output .= '<li>' . t('Content autocomplete for easy page selection') . '</li>';
+      $output .= '<li>' . t('URL alias support for clean URLs') . '</li>';
+      $output .= '<li>' . t('Direct path input support') . '</li>';
+      $output .= '</ul>';
+      
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<p>' . t('To configure homepage settings:') . '</p>';
+      $output .= '<ol>';
+      $output .= '<li>' . t('Go to Administration » Configuration » People » Homepage by role') . '</li>';
+      $output .= '<li>' . t('Set homepage paths by either:') . '</li>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Using the autocomplete to search for content') . '</li>';
+      $output .= '<li>' . t('Entering a path directly (e.g., /about-us)') . '</li>';
+      $output .= '<li>' . t('Using special paths (/, /user)') . '</li>';
+      $output .= '</ul>';
+      $output .= '</ol>';
+      
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function home_page_for_roles_user_login($account) {
+  $config = \Drupal::config('home_page_for_roles.settings');
+  $redirect_path = NULL;
+
+  // Check role-specific homepages with priority for administrator
+  $role_homepages = $config->get('role_homepages') ?? [];
+  $user_roles = $account->getRoles();
+  
+  // Priorité pour administrator
+  if (in_array('administrator', $user_roles) && !empty($role_homepages['administrator'])) {
+    $redirect_path = $role_homepages['administrator'];
+  }
+  else {
+    // Chercher dans les autres rôles (exclure 'authenticated' car c'est le rôle par défaut)
+    foreach ($user_roles as $role) {
+      if ($role !== 'authenticated' && !empty($role_homepages[$role])) {
+        $redirect_path = $role_homepages[$role];
+        break;
+      }
+    }
+  }
+  
+  // If no role-specific homepage, use default authenticated homepage
+  // Note: Anonymous users are handled separately by the EventSubscriber
+  if (!$redirect_path) {
+    $redirect_path = $config->get('authenticated_homepage');
+  }
+
+  // Stocker la destination pour redirection après login
+  if ($redirect_path && $redirect_path !== '/user') {
+    $path_validator = \Drupal::service('path.validator');
+    
+    // Vérifier que le chemin est valide
+    if ($path_validator->isValid($redirect_path)) {
+      // Stocker la destination dans la session pour redirection après login
+      $tempstore = \Drupal::service('tempstore.private')->get('home_page_for_roles');
+      $tempstore->set('redirect_path', $redirect_path);
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "drupal/acl",
+    "description": "Provides an access control list API. Has no features on its own.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/acl",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/acl",
+        "source": "https://git.drupalcode.org/project/acl"
+    },
+    "require": {
+        "php": ">=8.1",
+        "drupal/core": "^10.3 || ^11 || ^12"
+    }
+}

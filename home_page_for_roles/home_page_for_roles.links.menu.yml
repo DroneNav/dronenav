@@ -1,0 +1,6 @@
+home_page_for_roles.settings:
+  title: 'Homepage by role'
+  description: 'Configure homepage redirections based on user roles.'
+  route_name: home_page_for_roles.settings
+  parent: user.admin_index
+  weight: 1

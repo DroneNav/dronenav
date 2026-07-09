@@ -1,0 +1,16 @@
+home_page_for_roles.settings:
+  type: config_object
+  label: 'Homepage by role settings'
+  mapping:
+    anonymous_homepage:
+      type: string
+      label: 'Anonymous users homepage'
+    authenticated_homepage:
+      type: string
+      label: 'Authenticated users homepage'
+    role_homepages:
+      type: sequence
+      label: 'Role-specific homepages'
+      sequence:
+        type: string
+        label: 'Homepage path'

@@ -1,0 +1,8 @@
+entity_reference_selection.unpublished:
+  type: entity_reference_selection.default
+
+entity_reference_selection.unpublished_media:
+  type: entity_reference_selection.default
+
+entity_reference_selection.unpublished_taxonomy_term:
+  type: entity_reference_selection.default

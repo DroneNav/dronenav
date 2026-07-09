@@ -1,0 +1,9 @@
+name: Entity Reference Unpublished
+type: module
+description: 'Allows unpublished content to be referenced in an entity reference.'
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+
+# Information added by Drupal.org packaging script on 2026-02-12
+version: '2.0.2'
+project: 'entity_reference_unpublished'
+datestamp: 1770896972

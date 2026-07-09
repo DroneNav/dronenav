@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the acl module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function acl_schema() {
+  $schema['acl'] = [
+    'description'     => 'The base Access Control Lists table.',
+    'fields'          => [
+      'acl_id'        => [
+        'description' => 'Primary key: unique ACL ID.',
+        'type'        => 'serial',
+        'not null'    => TRUE,
+      ],
+      'module'        => [
+        'description' => 'The name of the module that created this ACL entry.',
+        'type'        => 'varchar',
+        'length'      => 255,
+        'not null'    => TRUE,
+      ],
+      'name'          => [
+        'description' => 'A name (or other identifying information) for this ACL entry, given by the module that created it.',
+        'type'        => 'varchar',
+        'length'      => 255,
+      ],
+      'figure'        => [
+        'description' => "A number for this ACL entry, given by the module that created it; use either 'name' or 'figure'.",
+        'type'        => 'int',
+      ],
+    ],
+    'primary key'     => ['acl_id'],
+    'indexes'         => [
+      'module_figure_name' => [
+        ['module', 64],
+        'figure',
+        ['name', 64],
+      ],
+      'module_name' => [
+        ['module', 64],
+        'name',
+      ],
+    ],
+  ];
+  $schema['acl_user'] = [
+    'description'     => 'Identifies {users} to which the referenced {acl} entry applies.',
+    'fields'          => [
+      'acl_id'        => [
+        'description' => 'The {acl}.acl_id of the entry.',
+        'type'        => 'int',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'uid'           => [
+        'description' => 'The {user}.uid to which this {acl} entry applies.',
+        'type'        => 'int',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+    ],
+    'primary key'     => ['acl_id', 'uid'],
+    'indexes'         => [
+      'uid'           => ['uid'],
+    ],
+  ];
+  $schema['acl_node'] = [
+    'description'     => 'Identifies {node}s to which the referenced {acl} entry applies and defines the permissions granted.',
+    'fields'          => [
+      'acl_id'        => [
+        'description' => 'The {acl}.acl_id of the entry.',
+        'type'        => 'int',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'nid'           => [
+        'description' => 'The {node}.nid to grant permissions for.',
+        'type'        => 'int',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'grant_view'    => [
+        'description' => 'Whether to grant "view" permission.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'grant_update'  => [
+        'description' => 'Whether to grant "update" permission.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'grant_delete'  => [
+        'description' => 'Whether to grant "delete" permission.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'priority'      => [
+        'description' => 'The priority of this grant record (for hook_node_access_records()).',
+        'type'        => 'int',
+        'size'        => 'small',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+    ],
+    'primary key'     => ['acl_id', 'nid'],
+    'indexes'         => [
+      'nid'           => ['nid'],
+    ],
+  ];
+
+  return $schema;
+}

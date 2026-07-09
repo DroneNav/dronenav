@@ -1,0 +1,9 @@
+home_page_for_roles.settings:
+  path: '/admin/config/people/homepage-roles'
+  defaults:
+    _form: '\Drupal\home_page_for_roles\Form\HomePageForRolesSettingsForm'
+    _title: 'Homepage by role'
+  requirements:
+    _permission: 'administer users'
+  options:
+    _admin_route: TRUE

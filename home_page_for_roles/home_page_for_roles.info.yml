@@ -1,0 +1,17 @@
+name: 'Homepage by role'
+type: module
+description: 'Configure different homepage redirections based on user roles.'
+core_version_requirement: ^11
+package: 'Administration'
+configure: home_page_for_roles.settings
+dependencies:
+  - drupal:user
+# Information added by Drupal.org packaging script on 2025-02-10
+# version: '11.0'
+# project: 'home_page_for_roles'
+# datestamp: 1739224311
+
+# Information added by Drupal.org packaging script on 2025-08-20
+version: '11.0.1'
+project: 'home_page_for_roles'
+datestamp: 1755665796
